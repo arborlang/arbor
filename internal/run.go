@@ -33,7 +33,7 @@ func (b Run) Action(c *cli.Context) {
 		os.Exit(-1)
 	}
 	if isWasm {
-		ret, err := arbor.RunWasm(content, entryPoint)
+		ret, err := arbor.RunWasm(content, entryPoint, "stdlib.so")
 		if err != nil {
 			fmt.Println(err)
 			ret = -1

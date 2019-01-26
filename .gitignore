@@ -1,3 +1,7 @@
 go.sum
 
 vendor/
+stdlib.so
+test.ab
+test.wast
+test.wasm

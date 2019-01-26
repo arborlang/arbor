@@ -1,3 +1,4 @@
+export GO111MODULE=on
 ARBOR_VERSION?=0.0.0-rc0
 
 all:
@@ -13,4 +14,8 @@ wast_test:
 	wat2wasm -o test.wasm test.wast
 	./arbor run --wasm --entrypoint main test.wasm
 
-test_run: test_file wast_test
+test_run: refresh test_file wast_test
+
+refresh:
+	rm -rf vendor/
+	go mod vendor
