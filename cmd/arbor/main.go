@@ -9,20 +9,40 @@ import (
 	"plugin"
 
 	arbor "github.com/arborlang/arbor-dev"
-	build "github.com/arborlang/lib/build"
+	"github.com/arborlang/arbor/internal"
 	"github.com/urfave/cli"
 )
 
+// exists returns whether the given file or directory exists
+func exists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return true, err
+}
+
 // LoadPlugins load the plugins for the tool chain
 func LoadPlugins() []arbor.Command {
-	plugs := []plugins.Command{
-		build.Build{},
+	plugs := []arbor.Command{
+		arbortools.Build{},
+		arbortools.Run{},
 	}
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		log.Fatal(err)
 	}
 	dir = path.Join(dir, "plugins")
+	doesExsit, err := exists(dir)
+	if err != nil {
+		panic(err)
+	}
+	if !doesExsit {
+		return plugs
+	}
 	err = filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if !info.IsDir() {
 			plug, err := plugin.Open(path)
@@ -33,7 +53,7 @@ func LoadPlugins() []arbor.Command {
 			if err != nil {
 				return err
 			}
-			cmd, ok := cmdPlug.(plugins.Command)
+			cmd, ok := cmdPlug.(arbor.Command)
 			if !ok {
 				return fmt.Errorf("plugin %s doesn't implement the plugins.Command interface", path)
 			}
