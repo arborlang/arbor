@@ -10,9 +10,19 @@ publish:
 test_file: all
 	./arbor build -wast -o test.wast test.ab
 	
+test_debug: build_debug
+	./arbor build -wast -o test.wast test.ab
+
+build_debug:
+	go build -gcflags='all=-N -l' -tags nopkcs11 -ldflags='-linkmode internal' -o arbor ./cmd/arbor/main.go 
+
 wast_test:
 	wat2wasm -o test.wasm test.wast
 	./arbor run --wasm --entrypoint main test.wasm
+
+debug_run: test_debug
+	wat2wasm -o test.wasm test.wast
+	dlv exec ./arbor -- run --wasm --entrypoint main test.wasm
 
 test_run: refresh test_file wast_test
 
