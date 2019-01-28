@@ -5,3 +5,5 @@ stdlib.so
 test.ab
 test.wast
 test.wasm
+
+/arbor
