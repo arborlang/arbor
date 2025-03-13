@@ -7,3 +7,6 @@ test.wast
 test.wasm
 
 /arbor
+.nx/installation
+.nx/cache
+.nx/workspace-data

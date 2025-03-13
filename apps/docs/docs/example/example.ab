@@ -1,0 +1,107 @@
+import stdlib as Thing from "github.com/arborlang/stdlib";
+
+type SomeRandomError {};
+type SomeRandomSignal {};
+type SomeRandomWarning {};
+type SomeRandomFatal {};
+type iface1 {};
+
+type Something {
+	someOtherAccess: String;	
+};
+
+type Value {
+	toString: fn () -> String;
+	getObject: fn () -> Something;
+};
+
+type foobar {
+	foobar: Number;
+	bazBar: Number;
+};
+
+type Test <TBaz> {
+	Example: fn () -> Boolean;
+	Name: String;
+};
+
+fn Test::__Construct() {
+	
+};
+
+fn Bazzer (val: foobar) -> Number {
+	match val {
+		|> {foobar: 1, bazBar: 2} {
+			return 23;
+		}
+		|> val.foobar == 10 || val.bazBar == 2 {
+			return 0;
+		}
+	}
+	return 1;
+};
+
+fn Test::Decorator<TCall implements Stringer> (val: TCall) -> TCall {
+	if val == "something" {
+		return val;
+	} else if val > 1 {
+		return val;
+	} else {
+		
+	}
+	val = fatal new SomeRandomError();
+	return val[33];
+};
+
+fn RealDecorator(fnToDec: fn(values: Number) -> Number) -> fn(values: Number) -> Number {
+	return fnToDec;
+};
+
+RealDecorator(fn (values: Number) -> Number {
+	let value = new Value();
+	value.getObject().someOtherAccess;
+	value.toString() == "buttt"[0:2];
+	try {
+		signal new SomeRandomSignal();
+		const warnResponse = warn new SomeRandomWarning();
+		fatal new SomeRandomFatal();
+	} handle (e: SomeRandomSignal) {
+		continue;
+	}
+    handle (w: SomeRandomWarning) {
+		continue with "RetryWarning";
+	};
+	return 2 + 1;
+});
+
+@RealDecorator
+fn DecoratedVal (value: Number) -> Number{
+	value.toString().someOtherAccess;
+	value.toString() == "buttt"[0:2];
+	try {
+		signal new SomeRandomSignal();
+		const warnResponse = warn new SomeRandomWarning();
+		fatal new SomeRandomFatal();
+	} handle (e: SomeRandomSignal) {
+		continue;
+	}
+    handle (w: SomeRandomWarning) {
+		continue with "RetryWarning";
+	};
+	return 2 + 1;
+};
+
+let test = new Test();
+test |> DecoratedVal;
+
+type Stringer extends iface1 {
+	Thing: fn (xyz: String) -> String;
+};
+
+fn Stringer::Thing(xyz: String) -> String {
+	return xyz;
+};
+
+type Find implements ABC, XYZ, ZZZ Boop;
+
+type Thing String;

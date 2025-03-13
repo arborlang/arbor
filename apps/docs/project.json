@@ -1,0 +1,22 @@
+{
+    "name": "docs",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/docs",
+    "tags": [],
+    "targets": {
+        "dev": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "mkdocs serve --config-file {projectRoot}/mkdocs.yml -w {projectRoot}"
+            }
+        },
+        "build": {
+            "executor": "nx:run-commands",
+            "cache": true,
+            "options": {
+                "command": "mkdocs build --config-file {projectRoot}/mkdocs.yml -d dist/{projectRoot}"
+            }
+        }
+    }
+}

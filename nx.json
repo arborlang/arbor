@@ -1,0 +1,16 @@
+{
+  "installation": {
+    "version": "20.5.0",
+    "plugins": {
+      "@nx-go/nx-go": "3.3.1"
+    }
+  },
+  "plugins": [
+    "@nx-go/nx-go"
+  ],
+  "namedInputs": {
+    "sharedGlobals": [
+      "{workspaceRoot}/go.work"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+go 1.22
+
+use (
+	./libs/arbor-dev
+	./libs/ArborGo
+	./apps/arbor
+)
