@@ -1,1 +1,12 @@
-site_name: My Docs
+site_name: Arborlang
+site_url: https://arborlang.dev
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.footer
+    - toc.integrate
+    - content.code.annotate
+plugins:
+   - search
+   - awesome-nav
