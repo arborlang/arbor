@@ -1,0 +1,8 @@
+sort:
+  sections: mixed
+
+nav:
+  - Home: index.md
+  - Learn
+  - Spec
+  - "*"

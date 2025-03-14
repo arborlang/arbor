@@ -1,12 +1,24 @@
 site_name: Arborlang
 site_url: https://arborlang.dev
+repo_name: arborlang/arbor
+repo_url: https://github.com/arborlang/arbor
 theme:
   name: material
+  icon:
+    repo: fontawesome/brands/github
   features:
     - navigation.tabs
     - navigation.footer
-    - toc.integrate
     - content.code.annotate
 plugins:
    - search
    - awesome-nav
+   - git-revision-date-localized:
+      enable_creation_date: true
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/arborlang/arbor
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/fvMNTsKS3A
+
