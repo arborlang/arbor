@@ -11,6 +11,12 @@
                 "command": "mkdocs serve --config-file {projectRoot}/mkdocs.yml -w {projectRoot}"
             }
         },
+        "install": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "pip install -r requirements.txt"
+            }
+        },
         "build": {
             "executor": "nx:run-commands",
             "cache": true,
