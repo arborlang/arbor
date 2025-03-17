@@ -42,6 +42,7 @@ jobs:
       # - uses: nrwl/nx-set-shas@v4
       - run: pip install -r apps/docs/requirements.txt
       - run: ./nx build docs
+      - run: mkdir _site/ && cp -r apps/docs/dist/* _site/
 
       # - run: npx nx-cloud record -- nx format:check
       # - run: npx nx affected -t build
@@ -49,7 +50,7 @@ jobs:
       - name: Save Docs page
         uses: actions/upload-pages-artifact@v3
         with:
-          path: apps/docs/dist/
+          path: _site/
   # Deployment job
   deploy:
     environment:
