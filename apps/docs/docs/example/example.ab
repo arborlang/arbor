@@ -1,107 +1,42 @@
 import stdlib as Thing from "github.com/arborlang/stdlib";
 
-type SomeRandomError {};
-type SomeRandomSignal {};
-type SomeRandomWarning {};
-type SomeRandomFatal {};
-type iface1 {};
+type Thing {}
 
-type Something {
-	someOtherAccess: String;	
-};
+fn performAction(v?: number) -> number {
+	return v * v ?? 1
+}
 
-type Value {
-	toString: fn () -> String;
-	getObject: fn () -> Something;
-};
 
-type foobar {
-	foobar: Number;
-	bazBar: Number;
-};
+fn Thing::doSomething() {
+	let val = await something() // Await is a key word to enable cooperative scheduling.
+	let someChan = go performAction() // go spawns a new green thread, and returns a communications channel
+	doSomethingElse()
+	let value = <-someChan // wait for someChan to have data on it. Value will have type of number;
+}
 
-type Test <TBaz> {
-	Example: fn () -> Boolean;
-	Name: String;
-};
-
-fn Test::__Construct() {
-	
-};
-
-fn Bazzer (val: foobar) -> Number {
-	match val {
-		|> {foobar: 1, bazBar: 2} {
-			return 23;
-		}
-		|> val.foobar == 10 || val.bazBar == 2 {
-			return 0;
+fn Thing::somethingCrazier() {
+	let channelA = go performAction();
+	let channelB = go fn(pipe: Pipe<number>) {
+		for let v <- pipe {
+			yield performAction(v)
 		}
 	}
-	return 1;
-};
-
-fn Test::Decorator<TCall implements Stringer> (val: TCall) -> TCall {
-	if val == "something" {
-		return val;
-	} else if val > 1 {
-		return val;
-	} else {
-		
+	let timeOutChan = go timeOut(2000)
+	select {
+		case let v <- channelA: 
+			stdlib.print("value from A is:", v)
+		case let v <- channelB: 
+		    stdlib.print("value from B is:", v)
+		case <- timeOutChan:
+		    close(channelB)
+			break;
+		default:
+		    channelB <- 2
 	}
-	val = fatal new SomeRandomError();
-	return val[33];
-};
+}
 
-fn RealDecorator(fnToDec: fn(values: Number) -> Number) -> fn(values: Number) -> Number {
-	return fnToDec;
-};
-
-RealDecorator(fn (values: Number) -> Number {
-	let value = new Value();
-	value.getObject().someOtherAccess;
-	value.toString() == "buttt"[0:2];
-	try {
-		signal new SomeRandomSignal();
-		const warnResponse = warn new SomeRandomWarning();
-		fatal new SomeRandomFatal();
-	} handle (e: SomeRandomSignal) {
-		continue;
-	}
-    handle (w: SomeRandomWarning) {
-		continue with "RetryWarning";
-	};
-	return 2 + 1;
-});
-
-@RealDecorator
-fn DecoratedVal (value: Number) -> Number{
-	value.toString().someOtherAccess;
-	value.toString() == "buttt"[0:2];
-	try {
-		signal new SomeRandomSignal();
-		const warnResponse = warn new SomeRandomWarning();
-		fatal new SomeRandomFatal();
-	} handle (e: SomeRandomSignal) {
-		continue;
-	}
-    handle (w: SomeRandomWarning) {
-		continue with "RetryWarning";
-	};
-	return 2 + 1;
-};
-
-let test = new Test();
-test |> DecoratedVal;
-
-type Stringer extends iface1 {
-	Thing: fn (xyz: String) -> String;
-};
-
-fn Stringer::Thing(xyz: String) -> String {
-	return xyz;
-};
-
-type Find implements ABC, XYZ, ZZZ Boop;
-
-type Thing String;
+fn main() -> int {
+	const thing = new Thing();
+	thing.doSomething(); // Blocking
+	thing.doSomethingCrazier();
+}
