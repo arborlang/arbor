@@ -42,7 +42,7 @@ jobs:
       # - uses: nrwl/nx-set-shas@v4
       - run: pip install -r apps/docs/requirements.txt
       - run: ./nx build docs
-      - run: mkdir _site/ && mv -v apps/docs/dist/* _site/
+      - run: mkdir _site/ && mv -v apps/docs/dist/apps/docs/* _site/
       - run: ls -al _site/
 
       # - run: npx nx-cloud record -- nx format:check
